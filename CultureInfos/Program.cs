@@ -1,33 +1,28 @@
 ﻿using System.Globalization;
-using System.Speech.Recognition;
 using System.Speech.Synthesis;
 
 namespace CultureInfos
 {
-    internal class Program
+  internal class Program
+  {
+    static void Main()
     {
-        static void Main(string[] args)
-        {
-            var Builder = new PromptBuilder();
-            SpeechSynthesizer synth = new SpeechSynthesizer();
-            synth.SetOutputToDefaultAudioDevice();
-            string Gapir = Console.ReadLine();
+      var Builder = new PromptBuilder();
+      SpeechSynthesizer synth = new();
+      synth.SetOutputToDefaultAudioDevice();
+      string voice = "Ceci est un test pour écouter comment une voix synthétique prononce du texte";
+      Console.WriteLine(voice);
 
+      Builder.StartVoice(new CultureInfo("fr-FR"));
+      Builder.EndVoice();
+      Builder.AppendText(voice);
+      synth.Speak(Builder);
 
-            Builder.StartVoice(new CultureInfo("en-US"));
-            Builder.EndVoice();
-            Builder.AppendText(Gapir);
-
-
-            Builder.StartVoice(new CultureInfo("uz-UZ"));
-            Builder.EndVoice();
-            Builder.AppendText("Uzbekcha Gapiraman");
-            synth.Speak(Builder);
-            //Console.ReadKey();
-        }
+      DateTime dateTime = DateTime.Now;
+      CultureInfo culture = CultureInfo.GetCultureInfo("fr-FR");
+      string Time = dateTime.ToString("dddd,dd MMM yyyy", culture);
+      Console.WriteLine(Time);
+      Console.ReadKey();
     }
+  }
 }
-            //DateTime dateTime = DateTime.Now;
-            //CultureInfo culture = CultureInfo.GetCultureInfo("en-US");
-            //string Time = dateTime.ToString("dddd,dd MMM yyyy",culture);
-            //Console.WriteLine(Time);
